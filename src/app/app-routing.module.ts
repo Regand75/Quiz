@@ -8,10 +8,8 @@ const routes: Routes = [
     path: '',
     component: LayoutComponent,
     children: [
-      {
-        path: '', component: MainComponent
-      }
-      // loadChildren: () => import('./').then(m => m...),
+      {path: '', component: MainComponent},
+      {path: '', loadChildren: () => import('./views/user/user.module').then(m => m.UserModule)},
     ]
   }
 ];
