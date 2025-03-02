@@ -7,9 +7,9 @@ import { LayoutComponent } from './shared/layout/layout.component';
 import { HeaderComponent } from './shared/layout/header/header.component';
 import { FooterComponent } from './shared/layout/footer/footer.component';
 import { MainComponent } from './views/main/main.component';
-import {LoginComponent} from "./views/user/login/login.component";
-import {SignupComponent} from "./views/user/signup/signup.component";
-import {UserModule} from "./views/user/user.module";
+import {RouterModule} from "@angular/router";
+import {HttpClientModule} from "@angular/common/http";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,10 @@ import {UserModule} from "./views/user/user.module";
   ],
   imports: [
     BrowserModule,
+    RouterModule,
+    HttpClientModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
