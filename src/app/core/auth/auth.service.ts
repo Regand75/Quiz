@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import { environment } from 'src/environments/environment';
 import {LoginResponseType} from "../../../types/login-response.type";
-import {Observable, Subject} from "rxjs";
+import {Observable, Subject, tap} from "rxjs";
 import {UserInfoType} from "../../../types/user-info.type";
 import { LogoutResponseType } from 'src/types/logout-response.type';
+import {SignupResponseType} from "../../../types/signup-response.type";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,26 @@ export class AuthService {
 
   login(email: string, password: string): Observable<LoginResponseType> {
     return this.http.post<LoginResponseType>(environment.apiHost + "login", {
+      email,
+      password,
+    })
+      .pipe(
+        tap((data: LoginResponseType) => {
+          if (data.fullName && data.userId && data.accessToken && data.refreshToken) {
+            this.setUserInfo({
+              fullName: data.fullName,
+              userId: data.userId,
+            });
+            this.setToken(data.accessToken, data.refreshToken);
+          }
+        })
+      );
+  }
+
+  signup(name: string, lastName: string, email: string, password: string): Observable<LoginResponseType> {
+    return this.http.post<SignupResponseType>(environment.apiHost + "signup", {
+      name,
+      lastName,
       email,
       password,
     });

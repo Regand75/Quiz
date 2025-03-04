@@ -33,15 +33,10 @@ export class LoginComponent implements OnInit {
               throw new Error(data.message ? data.message : 'Error with data on login');
             }
 
-            this.authService.setUserInfo({
-              fullName: data.fullName,
-              userId: data.userId,
-            });
             // Сохраняем email в localStorage после успешного логина
             if (this.loginForm.value.email) {
               this.authService.setUserEmail(this.loginForm.value.email);
             }
-            this.authService.setToken(data.accessToken, data.refreshToken);
 
             this.router.navigate(['/choice']);
           },
