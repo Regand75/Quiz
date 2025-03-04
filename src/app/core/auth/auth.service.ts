@@ -6,12 +6,13 @@ import {Observable, Subject, tap} from "rxjs";
 import {UserInfoType} from "../../../types/user-info.type";
 import { LogoutResponseType } from 'src/types/logout-response.type';
 import {SignupResponseType} from "../../../types/signup-response.type";
+import {RefreshResponseType} from "../../../types/refresh-response.type";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  public accessTokenKey: string = 'accessToken';
+  accessTokenKey: string = 'accessToken';
   private refreshTokenKey: string = 'refreshToken';
   private userInfoKey: string = 'userInfo';
   private userEmailKey: string = 'userEmail';
@@ -41,13 +42,18 @@ export class AuthService {
       );
   }
 
-  signup(name: string, lastName: string, email: string, password: string): Observable<LoginResponseType> {
+  signup(name: string, lastName: string, email: string, password: string): Observable<SignupResponseType> {
     return this.http.post<SignupResponseType>(environment.apiHost + "signup", {
       name,
       lastName,
       email,
       password,
     });
+  }
+
+  refresh(): Observable<RefreshResponseType> {
+    const refreshToken: string | null = localStorage.getItem(this.refreshTokenKey);
+    return this.http.post<RefreshResponseType>(environment.apiHost + 'refresh', {refreshToken});
   }
 
   logout(): Observable<LogoutResponseType> {
@@ -59,7 +65,7 @@ export class AuthService {
     return this.isLogged;
   }
 
-  public setToken(accessToken: string, refreshToken: string): void {
+  setToken(accessToken: string, refreshToken: string): void {
     localStorage.setItem(this.accessTokenKey, accessToken);
     localStorage.setItem(this.refreshTokenKey, refreshToken);
     this.isLogged = true;
@@ -73,11 +79,11 @@ export class AuthService {
     this.isLogged$.next(false);
   }
 
-  public setUserEmail(email: string): void {
+  setUserEmail(email: string): void {
     localStorage.setItem(this.userEmailKey, JSON.stringify(email));
   }
 
-  public getUserEmail(): string | null {
+  getUserEmail(): string | null {
     const userEmail: string | null = localStorage.getItem(this.userEmailKey);
     if (userEmail) {
       return JSON.parse(userEmail);
@@ -85,15 +91,22 @@ export class AuthService {
     return null;
   }
 
-  public setUserInfo(info: UserInfoType): void {
+  setUserInfo(info: UserInfoType): void {
     localStorage.setItem(this.userInfoKey, JSON.stringify(info));
   }
 
-  public removeUserInfo(): void {
+  removeUserInfo(): void {
     localStorage.removeItem(this.userInfoKey);
   }
 
-  public getUserInfo(): UserInfoType | null {
+  getTokens(): {accessToken: string | null, refreshToken: string | null} {
+    return {
+      accessToken: localStorage.getItem(this.accessTokenKey),
+      refreshToken: localStorage.getItem(this.refreshTokenKey),
+    }
+  };
+
+  getUserInfo(): UserInfoType | null {
     const userInfo: string | null = localStorage.getItem(this.userInfoKey);
     if (userInfo) {
       return JSON.parse(userInfo);
