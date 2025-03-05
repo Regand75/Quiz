@@ -7,7 +7,7 @@ import {AnswersComponent} from "./answers/answers.component";
 
 const routes: Routes = [
   {path: 'choice', component: ChoiceComponent},
-  {path: 'test', component: TestComponent},
+  {path: 'test/:id', component: TestComponent},
   {path: 'result', component: ResultComponent},
   {path: 'answers', component: AnswersComponent},
 ];

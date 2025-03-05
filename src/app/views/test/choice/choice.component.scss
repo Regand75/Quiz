@@ -54,17 +54,17 @@
             top: 27px;
             display: none;
           }
-        }
 
-        &:hover {
-          border-left: 5px solid #6933DC;
-          cursor: pointer;
-          color: #6933DC;
-          font-family: 'MuseoSansCyrlBold', sans-serif;
-        }
+          &:hover {
+            border-left: 5px solid #6933DC;
+            cursor: pointer;
+            color: #6933DC;
+            font-family: 'MuseoSansCyrlBold', sans-serif;
+          }
 
-        &:hover .choice-option-arrow {
-          display: block;
+          &:hover .choice-option-arrow {
+            display: block;
+          }
         }
       }
     }
