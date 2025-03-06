@@ -1,1 +1,29 @@
-<p>test works!</p>
+<section class="test" *ngIf="quiz">
+  <div class="container">
+    <div class="test-pre-title" id="test-pre-title">
+      {{ quiz.name }}
+    </div>
+    <div class="test-progress-bar" id="test-progress-bar"></div>
+    <div class="test-question">
+      <div class="test-question-title" id="test-question-title">
+        <span>Вопрос {{ currentQuestionIndex }}:</span> {{ quiz.questions[currentQuestionIndex - 1].question }}
+      </div>
+      <div class="test-question-options" id="test-question-options"></div>
+    </div>
+    <div class="test-actions">
+      <div class="test-previous-action">
+        <button class="button button-transparent" id="prev" disabled>Назад</button>
+      </div>
+      <div class="test-time">
+        <div class="test-time-text">Осталось времени:</div>
+        <div class="test-time-clock" id="timer">{{ timerSeconds }}</div>
+      </div>
+      <div class="test-next-action">
+        <button class="button button-transparent" id="next" disabled>Дальше</button>
+      </div>
+    </div>
+    <div class="test-pass-question href-element">
+      <a href="javascript:void(0)" id="pass">Пропустить вопрос <img id="arrow-image" src="/assets/images/small-arrow.png" alt="Стрелочка"></a>
+    </div>
+  </div>
+</section>
