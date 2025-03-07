@@ -37,4 +37,7 @@ export class TestService {
       });
   }
 
+  getResult(id: number | string, userId: number | string): Observable<DefaultResponseType | PassTestResponseType> {
+    return this.http.get<DefaultResponseType | PassTestResponseType>(environment.apiHost + 'tests/' + id + '/result?userId=' + userId);
+  }
 }
